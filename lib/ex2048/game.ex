@@ -1,6 +1,6 @@
-defmodule Game do
+defmodule Ex2048.Game do
 
-  require Board
+  alias Ex2048.Board
   import Enum, only: [map: 2, any?: 2, reverse: 1, take_random: 2, random: 1, at: 3, filter: 2]
 
   def new(xsize \\ 4, ysize \\ 4), do: Board.new(xsize, ysize, nil) |> put_random
@@ -46,7 +46,7 @@ defmodule Game do
     Board.put(board, random_point, value)
   end
 
-  def pad(row, len, pad \\ nil), do: for i <- 0..len-1, do: at(row, i, pad)
+  defp pad(row, len, pad \\ nil), do: for i <- 0..len-1, do: at(row, i, pad)
 
-  def transpose(matrix), do: matrix |> List.zip |> map(&Tuple.to_list/1)
+  defp transpose(matrix), do: matrix |> List.zip |> map(&Tuple.to_list/1)
 end

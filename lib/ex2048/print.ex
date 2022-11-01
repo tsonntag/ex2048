@@ -1,4 +1,4 @@
-defmodule Print do
+defmodule Ex2048.Print do
 
   def format(board) do
     board |> Enum.map(fn row -> format_row(row) <> "\n" end) |> Enum.join("")

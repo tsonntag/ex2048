@@ -1,6 +1,6 @@
-defmodule Console do
+defmodule Ex2048.Console do
 
-  require Game
+  alias Ex2028.{Game,Print}
   require Print
 
   def init, do: Game.new

@@ -60,7 +60,7 @@ config :ex2048, Ex2048Web.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/ex2048_web/(live|views)/.*(ex)$",
-      ~r"lib/ex2048_web/templates/.*(eex)$"
+      ~r"lib/ex2048_web/templates/.*(eex|slim/slime)$"
     ]
   ]
 
