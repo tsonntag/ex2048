@@ -1,4 +1,4 @@
-defmodule Ex2048Web.PageController do
+defmodule Ex2048Web.GameController do
   use Ex2048Web, :controller
 
   def index(conn, _params) do

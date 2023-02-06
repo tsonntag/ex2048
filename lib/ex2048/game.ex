@@ -1,12 +1,22 @@
-defmodule Ex2048.Games do
-  @moduledoc """
-  The Games context.
-  """
-
+defmodule Ex2048.Game do
+  use Ecto.Schema
+  import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias Ex2048.Repo
+  alias Ex2048.{Game, Repo}
 
-  alias Ex2048.Games.Game
+  schema "games" do
+    field :board, :string
+    field :steps, :id
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(game, attrs) do
+    game
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
+  end
 
   @doc """
   Returns the list of games.
@@ -101,4 +111,5 @@ defmodule Ex2048.Games do
   def change_game(%Game{} = game, attrs \\ %{}) do
     Game.changeset(game, attrs)
   end
+
 end

@@ -1,7 +1,7 @@
 defmodule Ex2048Web.GameLive.Show do
   use Ex2048Web, :live_view
 
-  alias Ex2048.Games
+  alias Ex2048.Game
 
   @impl true
   def mount(_params, _session, socket) do
@@ -13,7 +13,7 @@ defmodule Ex2048Web.GameLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:game, Games.get_game!(id))}
+     |> assign(:game, Game.get_game!(id))}
   end
 
   defp page_title(:show), do: "Show Game"

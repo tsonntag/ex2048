@@ -1,11 +1,11 @@
 defmodule Ex2048Web.GameLive.FormComponent do
   use Ex2048Web, :live_component
 
-  alias Ex2048.Games
+  alias Ex2048.Game
 
   @impl true
   def update(%{game: game} = assigns, socket) do
-    changeset = Games.change_game(game)
+    changeset = Game.change_game(game)
 
     {:ok,
      socket
@@ -17,7 +17,7 @@ defmodule Ex2048Web.GameLive.FormComponent do
   def handle_event("validate", %{"game" => game_params}, socket) do
     changeset =
       socket.assigns.game
-      |> Games.change_game(game_params)
+      |> Game.change_game(game_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
@@ -28,7 +28,7 @@ defmodule Ex2048Web.GameLive.FormComponent do
   end
 
   defp save_game(socket, :edit, game_params) do
-    case Games.update_game(socket.assigns.game, game_params) do
+    case Game.update_game(socket.assigns.game, game_params) do
       {:ok, _game} ->
         {:noreply,
          socket
@@ -41,7 +41,7 @@ defmodule Ex2048Web.GameLive.FormComponent do
   end
 
   defp save_game(socket, :new, game_params) do
-    case Games.create_game(game_params) do
+    case Game.create_game(game_params) do
       {:ok, _game} ->
         {:noreply,
          socket

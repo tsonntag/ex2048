@@ -1,8 +1,7 @@
 defmodule Ex2048Web.GameLive.Index do
   use Ex2048Web, :live_view
 
-  alias Ex2048.Games
-  alias Ex2048.Games.Game
+  alias Ex2048.Game
 
   @impl true
   def mount(_params, _session, socket) do
@@ -17,7 +16,7 @@ defmodule Ex2048Web.GameLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Game")
-    |> assign(:game, Games.get_game!(id))
+    |> assign(:game, Game.get_game!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -34,13 +33,13 @@ defmodule Ex2048Web.GameLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    game = Games.get_game!(id)
-    {:ok, _} = Games.delete_game(game)
+    game = Game.get_game!(id)
+    {:ok, _} = Game.delete_game(game)
 
     {:noreply, assign(socket, :games, list_games())}
   end
 
   defp list_games do
-    Games.list_games()
+    Game.list_games()
   end
 end

@@ -4,6 +4,7 @@ defmodule Ex2048.MixProject do
   def project do
     [
       app: :ex2048,
+      escript: escript(),
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -22,6 +23,10 @@ defmodule Ex2048.MixProject do
       mod: {Ex2048.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
+  end
+
+  defp escript() do
+   [ main_module: Ex2048.Console ]
   end
 
   # Specifies which paths to compile per environment.

@@ -1,0 +1,86 @@
+# OBSOLETE
+defmodule Ex2048.BoardObsolete do
+
+  import Ex2048.Utils, only: [pad: 2, transpose: 1]
+  import Ex2048.Row
+
+  @type size :: {non_neg_integer(), non_neg_integer()}
+  @type direction :: :right, :left, :up, :down
+  @type pawn :: pos_integer() | nil
+  @type board :: list(list(pawn()))
+
+  @spec new(size()) :: board()
+  def new(size \\ {4, 4}) do
+    {xsize, ysize} = size
+    pawn = nil
+    List.duplicate(pawn, xsize) |> List.duplicate(ysize)
+  end
+
+  @spec start(size()) :: board()
+  def start(size \\ {4, 4}), do: new(size) |> put_random
+
+  @spec move(board(), direction()) :: board()
+  def move(board, direction) do
+    if can_shift?(board, direction) do
+      board |> shift(direction) |> put_random
+    else
+      board
+    end
+  end
+
+  @spec full?(board()) :: boolean()
+  def full?(board), do: board |> empty_points |> Enum.empty?
+
+  defp put_random(board) do
+    random_point = board |> empty_points |> Enum.take_random(1) |> hd
+    # use same propabilty as in https://github.com/gabrielecirulli/2048
+    pawn = if Enum.random(1..10) < 10, do: 2, else: 4
+    put(board, random_point, pawn)
+  end
+
+  defp can_shift?(board, direction) do
+    shift(board, direction) != board
+  end
+
+  defp shift(board, :up) do
+    board |> transpose |> shift(:left) |> transpose
+  end
+
+  defp shift(board, :down) do
+    board |> transpose |> shift(:right) |> transpose
+  end
+
+  defp shift(board, direction) do
+    Enum.map(board, &shift_row(&1, direction))
+  end
+
+  defp shift_row(row, :left) do
+    row |> Enum.filter(& &1) |> merge_left |> pad(length(row))
+  end
+
+  defp shift_row(row, :right) do
+    row |> Enum.reverse |> shift_row(:left) |> Enum.reverse
+  end
+
+  defp merge_left([]),            do: []
+  defp merge_left([a, a | rest]), do: [2 * a | merge_left(rest)]
+  defp merge_left([a    | rest]), do: [a     | merge_left(rest)]
+
+  defp get(board, {x, y}) do
+    board |> Enum.at(y, []) |> Enum.at(x)
+  end
+
+  defp put(board, {x, y}, pawn) do
+    board |> List.update_at(y, &List.replace_at(&1, x, pawn))
+  end
+
+  defp ysize(board), do: length(board)
+
+  defp points(board) do
+    for x <- Row.xs(board), y <- 0..ysize(board)-1, do: {x,y}
+  end
+
+  defp empty_points(board) do
+    points(board) |> Enum.filter(&!get(board, &1))
+  end
+end
