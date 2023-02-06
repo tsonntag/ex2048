@@ -2,7 +2,7 @@ defmodule Ex2048.Game do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias Ex2048.{Game, Repo}
+  alias Ex2048.{Board, Game, Repo, Print}
 
   schema "games" do
     field :board, :string
@@ -14,8 +14,8 @@ defmodule Ex2048.Game do
   @doc false
   def changeset(game, attrs) do
     game
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:board, :steps])
+    |> validate_required([:board])
   end
 
   @doc """
@@ -45,7 +45,9 @@ defmodule Ex2048.Game do
       ** (Ecto.NoResultsError)
 
   """
-  def get_game!(id), do: Repo.get!(Game, id)
+  def get_game!(id) do
+    Repo.get!(Game, id)
+  end
 
   @doc """
   Creates a game.
@@ -59,9 +61,15 @@ defmodule Ex2048.Game do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_game(attrs \\ %{}) do
-    %Game{}
-    |> Game.changeset(attrs)
+# def create_game(attrs \\ %{}) do
+#   %Game{}
+#   |> Game.changeset(attrs)
+#   |> Repo.insert()
+# end
+
+  def create_and_start_game()do
+    %Game{board: Board.start() |> Jason.encode!, steps: 1}
+    |> Game.changeset(%{})
     |> Repo.insert()
   end
 
@@ -110,6 +118,21 @@ defmodule Ex2048.Game do
   """
   def change_game(%Game{} = game, attrs \\ %{}) do
     Game.changeset(game, attrs)
+  end
+
+  def width(%Game{board: board}), do: Board.width(board)
+
+  def height(%Game{board: board}), do: Board.height(board)
+
+  def move(%Game{board: board, steps: steps} = game, direction) do
+    board = Board.move(board, direction)
+    |> IO.inspect(label: "MOVE: board")
+    |> Jason.encode!()
+
+    game
+    |> Game.changeset(%{board: board, steps: steps + 1})
+    |> Repo.update()
+    |> IO.inspect(label: "MOVE: game")
   end
 
 end

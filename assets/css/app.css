@@ -1,3 +1,8 @@
+/*@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+*/
+
 /* This file is for your main application CSS */
 @import "./phoenix.css";
 
@@ -117,4 +122,23 @@
 @keyframes fade-out-keys{
   0% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+.field {
+  height: 30px;
+  width: 30px;
+  color: white;
+  background-color: #AAAAAA;
+}
+
+.pawn-2 {
+  background-color: #440000;
+}
+
+.pawn-4 {
+  background-color: #f2dede;
+}
+
+.pawn-8 {
+  background-color: #8a6d3b;
 }

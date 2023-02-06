@@ -13,21 +13,18 @@ defmodule Ex2048Web.GameLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit Game")
-    |> assign(:game, Game.get_game!(id))
-  end
+  defp apply_action(socket, :create, _params) do
+    {:ok, game} = Game.create_and_start_game()
 
-  defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Game")
-    |> assign(:game, %Game{})
+    |> assign(:game, game)
+    |> push_redirect(to: Routes.game_show_path(socket, :show, game))
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Games")
+    |> assign(:page_title, "Games")
     |> assign(:game, nil)
   end
 
@@ -41,5 +38,6 @@ defmodule Ex2048Web.GameLive.Index do
 
   defp list_games do
     Game.list_games()
+    |> IO.inspect(label: "INDEX list_games")
   end
 end

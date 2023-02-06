@@ -3,7 +3,7 @@ defmodule Ex2048.Repo.Migrations.CreateGames do
 
   def change do
     create table(:games) do
-      add :board, :string
+      add :board, :text
       add :steps, :integer
 
       timestamps()

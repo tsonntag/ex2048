@@ -60,10 +60,12 @@ defmodule Ex2048.Board do
     board |> List.update_at(y, &Row.put(&1, x, pawn))
   end
 
-  defp row_count(board), do: length(board)
+  def height(board), do: length(board)
+
+  def width([row | _]), do: length(row)
 
   defp points(board) do
-    for x <- Row.xs(board), y <- 0..row_count(board)-1, do: {x,y}
+    for x <- Row.xs(board), y <- 0..height(board)-1, do: {x,y}
   end
 
   defp empty_points(board) do

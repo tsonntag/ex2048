@@ -4,7 +4,10 @@ defmodule Ex2048.Print do
     board |> Enum.map(fn row -> format_row(row) <> "\n" end) |> Enum.join("")
   end
 
-  def dump(board), do: board |> format |> IO.puts
+  def inspect(board) do
+    board |> format |> IO.puts
+    board
+  end
 
   defp format_row(row) do
     "|" <> (row |> Enum.map(&format_cell/1) |> Enum.join("|")) <> "|"

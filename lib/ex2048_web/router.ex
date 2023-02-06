@@ -14,10 +14,13 @@ defmodule Ex2048Web.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Ex2048Web do
+  scope "/game", Ex2048Web do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", GameLive.Index, :index
+    live "/create", GameLive.Index, :create
+    live "/:id", GameLive.Show, :show
+    live "/:id/move/:direction", GameLive.Show, :move
   end
 
   # Other scopes may use custom stacks.
