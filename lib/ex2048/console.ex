@@ -1,5 +1,5 @@
 defmodule Ex2048.Console do
-  alias Ex2048.{Board, Print}
+  alias Ex2048.{Board, Show}
 
   def run(size \\ {4, 4}) do
     Board.init(size) |> step
@@ -8,21 +8,21 @@ defmodule Ex2048.Console do
   def step(:quit), do: :done
 
   def step(board) do
-    Print.inspect(board)
+    Show.inspect(board)
 
     if Board.done?(board) do
       :done
     else
-      cmd = read_cmd() |> IO.inspect
+      cmd = read_cmd() |> IO.inspect()
       board |> execute_cmd(cmd) |> step
     end
   end
 
-  def execute_cmd(board, :noop), do: board
-  def execute_cmd(_, :quit), do: :quit
-  def execute_cmd(board, direction), do: Board.move(board, direction)
+  defp execute_cmd(board, :noop), do: board
+  defp execute_cmd(_,     :quit), do: :quit
+  defp execute_cmd(board, direction), do: Board.move(board, direction)
 
-  defp read_cmd, do: IO.read(:line) |> String.trim() |> key_to_cmd
+  defp read_cmd, do: IO.read(:line) |> String.trim() |> key_to_cmd()
 
   defp key_to_cmd("h"), do: :left
   defp key_to_cmd("j"), do: :down

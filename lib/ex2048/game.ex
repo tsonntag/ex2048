@@ -10,34 +10,41 @@ defmodule Ex2048.Game do
     timestamps()
   end
 
+  @type t :: %Game{board: Board.t()}
+
+  @spec width(t()) :: non_neg_integer
   def width(%Game{board: board}), do: Board.width(board)
 
+  @spec height(t()) :: non_neg_integer
   def height(%Game{board: board}), do: Board.height(board)
 
-  def init_game(), do: %Game{board: Board.init(), steps: 1}
-
+  @spec done?(Game.t()) :: boolean
   def done?(%Game{board: board}), do: Board.done?(board)
 
-  def changeset(game, attrs) do
+  @spec list_games() :: list(t)
+  def list_games(), do: Repo.all(Game) |> Enum.map(&decode/1)
+
+  @spec get_game!(non_neg_integer()) :: t()
+  def get_game!(id), do: Repo.get!(Game, id) |> decode()
+
+  @spec create_and_init_game :: {:ok, t()} | {:error, Ecto.Changeset.t()}
+  def create_and_init_game()do
+    %Game{board: Board.init(), steps: 1}
+    |> encode()
+    |> Repo.insert()
+  end
+
+  defp changeset(game, attrs) do
     game
     |> cast(attrs, [:board, :steps])
     |> validate_required([:board])
   end
 
-  def list_games, do: Repo.all(Game) |> IO.inspect(label: "REPO.ALL")|> Enum.map(&decode/1)
-
-  def get_game!(id), do: Repo.get!(Game, id) |> decode()
-
-  def create_and_init_game()do
-    init_game()
-    |> encode()
-    |> Repo.insert()
-  end
 
   defp update_game(%Game{} = game, attrs) do
     { :ok, game } = game
     |> encode()
-    |> Game.changeset(encode(attrs))
+    |> changeset(encode(attrs))
     |> Repo.update()
 
     { :ok, game |> decode() }

@@ -23,7 +23,7 @@ config :ex2048, Ex2048Web.Endpoint,
 # In test we don't send emails.
 config :ex2048, Ex2048.Mailer, adapter: Swoosh.Adapters.Test
 
-# Print only warnings and errors during test
+# Show only warnings and errors during test
 config :logger, level: :warn
 
 # Initialize plugs at runtime for faster test compilation

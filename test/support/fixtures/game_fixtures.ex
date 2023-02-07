@@ -14,7 +14,7 @@ defmodule Ex2048.GameFixtures do
         state: "some state",
         steps: 42
       })
-      |> Ex2048.Game.create_game()
+      |> Ex2048.Game.init_game()
 
     game
   end

@@ -127,6 +127,7 @@
 .field {
   height: 40px;
   width: 40px;
+  padding-top: 7px;
   text-align: center;
   vertical-align: middle;
   background-color: #FDF2E9;
@@ -139,11 +140,6 @@
 }
 
 .pawn-4 {
-  background-color: #EDBB99;
-  color: black;
-}
-
-.pawn-8 {
   background-color: #E59866;
 }
 

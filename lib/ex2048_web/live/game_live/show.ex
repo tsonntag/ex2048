@@ -29,17 +29,17 @@ defmodule Ex2048Web.GameLive.Show do
   end
 
   @impl true
-  def handle_event("keyup", %{"key" => "ArrowUp"}, socket), do: apply_move("up", socket)
-  def handle_event("keyup", %{"key" => "ArrowLeft"}, socket), do: apply_move("left", socket)
+  def handle_event("keyup", %{"key" => "ArrowUp"},    socket), do: apply_move("up",    socket)
+  def handle_event("keyup", %{"key" => "ArrowLeft"},  socket), do: apply_move("left",  socket)
   def handle_event("keyup", %{"key" => "ArrowRight"}, socket), do: apply_move("right", socket)
-  def handle_event("keyup", %{"key" => "ArrowDown"}, socket), do: apply_move("down", socket)
+  def handle_event("keyup", %{"key" => "ArrowDown"},  socket), do: apply_move("down",  socket)
 
   defp apply_move(direction, socket) do
     id = socket.assigns.game.id
     {:noreply, apply_action(socket, :move, %{"id" => id, "direction" => direction})}
   end
 
-  defp visible(true), do: "visible"
+  defp visible(true),  do: "visible"
   defp visible(false), do: "invisible"
 
   def done_visible(game), do: game |> Game.done?() |> visible()
