@@ -34,7 +34,6 @@ defmodule Ex2048.Game do
     |> validate_required([:board])
   end
 
-
   defp update_game(%Game{} = game, attrs) do
     { :ok, game } = game
     |> encode()

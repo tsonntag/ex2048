@@ -1,5 +1,7 @@
 <h1>Games</h1>
 
+<span><%= live_patch "New Game", to: Routes.game_index_path(@socket, :create) %></span>
+
 <table>
   <thead>
     <tr>
@@ -25,5 +27,3 @@
     <% end %>
   </tbody>
 </table>
-
-<span><%= live_patch "New Game", to: Routes.game_index_path(@socket, :create) %></span>

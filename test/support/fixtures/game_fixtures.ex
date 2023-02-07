@@ -7,7 +7,7 @@ defmodule Ex2048.GameFixtures do
   @doc """
   Generate a game.
   """
-  def game_fixture(attrs \\ %{}) do
+  def game_fixture(_attrs \\ %{}) do
     {:ok, game} =
       Ex2048.Game.create_and_init_game()
     game
