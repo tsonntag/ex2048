@@ -12,12 +12,6 @@ defmodule Ex2048.Game do
 
   @type t :: %Game{board: Board.t()}
 
-  @spec width(t()) :: non_neg_integer
-  def width(%Game{board: board}), do: Board.width(board)
-
-  @spec height(t()) :: non_neg_integer
-  def height(%Game{board: board}), do: Board.height(board)
-
   @spec done?(Game.t()) :: boolean
   def done?(%Game{board: board}), do: Board.done?(board)
 

@@ -12,9 +12,6 @@ defmodule Ex2048.Row do
     List.duplicate(pawn, width)
   end
 
-  @spec width(t()) :: non_neg_integer()
-  def width(row), do: length(row)
-
   @spec get(t(), index()) :: pawn()
   def get(row, x), do: Enum.at(row, x)
 
