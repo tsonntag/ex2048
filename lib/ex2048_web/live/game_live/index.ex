@@ -5,7 +5,7 @@ defmodule Ex2048Web.GameLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :games, list_games())}
+    {:ok, assign(socket, :games, Game.list_games())}
   end
 
   @impl true
@@ -14,7 +14,7 @@ defmodule Ex2048Web.GameLive.Index do
   end
 
   defp apply_action(socket, :create, _params) do
-    {:ok, game} = Game.create_and_start_game()
+    {:ok, game} = Game.create_and_init_game()
 
     socket
     |> assign(:page_title, "New Game")
@@ -33,11 +33,7 @@ defmodule Ex2048Web.GameLive.Index do
     game = Game.get_game!(id)
     {:ok, _} = Game.delete_game(game)
 
-    {:noreply, assign(socket, :games, list_games())}
+    {:noreply, assign(socket, :games, Game.list_games())}
   end
 
-  defp list_games do
-    Game.list_games()
-    |> IO.inspect(label: "INDEX list_games")
-  end
 end

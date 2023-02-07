@@ -4,8 +4,10 @@ defmodule Ex2048.Board do
   alias Ex2048.Row
 
   @type size :: {non_neg_integer(), non_neg_integer()}
-  @type(direction :: :right, :left, :up, :down)
+  @type direction :: :right | :left | :up | :down
   @type board :: list(Row.t())
+
+  @directions [:left, :right, :up, :down]
 
   @spec new(size()) :: board()
   def new(size \\ {4, 4}) do
@@ -14,23 +16,25 @@ defmodule Ex2048.Board do
     Row.new(width, pawn) |> List.duplicate(height)
   end
 
-  @spec start(size()) :: board()
-  def start(size \\ {4, 4}), do: new(size) |> put_random
+  @spec init(size()) :: board()
+  def init(size \\ {4, 4}), do: new(size) |> put_random()
 
   @spec move(board(), direction()) :: board()
   def move(board, direction) do
     if can_shift?(board, direction) do
-      board |> shift(direction) |> put_random
+      board |> shift(direction) |> put_random()
     else
       board
     end
   end
 
-  @spec full?(board()) :: boolean()
-  def full?(board), do: board |> empty_points |> Enum.empty?
+  @spec done?(board()) :: boolean()
+  def done?(board) do
+    @directions |> Enum.all?(&!can_shift?(board, &1))
+  end
 
   defp put_random(board) do
-    random_point = board |> empty_points |> Enum.take_random(1) |> hd
+    random_point = board |> empty_points() |> Enum.take_random(1) |> hd
     # use same propabilty as in https://github.com/gabrielecirulli/2048
     pawn = if Enum.random(1..10) < 10, do: 2, else: 4
     put(board, random_point, pawn)
@@ -49,7 +53,7 @@ defmodule Ex2048.Board do
   end
 
   defp shift(board, direction) do
-    Enum.map(board, &Row.shift(&1, direction))
+    board |> Enum.map(&Row.shift(&1, direction))
   end
 
   defp get(board, {x, y}) do
@@ -69,6 +73,7 @@ defmodule Ex2048.Board do
   end
 
   defp empty_points(board) do
-    points(board) |> Enum.filter(&!get(board, &1))
+    board |> points() |> Enum.filter(&!get(board, &1))
   end
+
 end

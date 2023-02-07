@@ -8,17 +8,17 @@ defmodule Ex2048.Row do
   @type t :: list(pawn())
 
   @spec new(non_neg_integer(), pawn()) :: t()
-  def new(length \\ 4, pawn \\ nil) do
-    List.duplicate(pawn, length)
+  def new(width \\ 4, pawn \\ nil) do
+    List.duplicate(pawn, width)
   end
 
   @spec shift(t(), direction()) :: t()
   def shift(row, :left) do
-    row |> Enum.filter(& &1) |> merge_left |> pad(length(row))
+    row |> Enum.filter(& &1) |> merge_left() |> pad(length(row))
   end
 
   def shift(row, :right) do
-    row |> Enum.reverse |> shift(:left) |> Enum.reverse
+    row |> Enum.reverse |> shift(:left) |> Enum.reverse()
   end
 
   defp merge_left([]),            do: []
@@ -31,6 +31,7 @@ defmodule Ex2048.Row do
   @spec put(t(), index(), pawn()) :: t()
   def put(row, x, pawn), do: List.replace_at(row, x, pawn)
 
+  @spec xs(t()) :: list(index())
   def xs(row) do
     for x <- 0..length(row)-1, do: x
   end

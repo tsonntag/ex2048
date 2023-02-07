@@ -1,5 +1,5 @@
 <div class="container text-center">
-  <%= for {row, y} <- Enum.with_index(@board |> Jason.decode!) do %>
+  <%= for {row, y} <- Enum.with_index(@board) do %>
     <div class="row" id={"row-#{y}"}>
       <%= for {pawn, x} <- Enum.with_index(row) do %>
         <div class={"field col-1 m-1 pawn-#{pawn}"} id={"pawn-#{x}-#{y}"}>

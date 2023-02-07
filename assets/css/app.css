@@ -125,20 +125,77 @@
 }
 
 .field {
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #FDF2E9;
   color: white;
-  background-color: #AAAAAA;
 }
 
 .pawn-2 {
-  background-color: #440000;
+  background-color: #EDBB99;
+  color: black;
 }
 
 .pawn-4 {
-  background-color: #f2dede;
+  background-color: #EDBB99;
+  color: black;
 }
 
 .pawn-8 {
-  background-color: #8a6d3b;
+  background-color: #E59866;
 }
+
+.pawn-8 {
+  background-color: #DC7633;
+}
+
+.pawn-16 {
+  background-color: #D35400;
+}
+
+.pawn-32 {
+  background-color: #BA4A00;
+}
+
+.pawn-64 {
+  background-color: #A04000;
+}
+
+.pawn-128 {
+  background-color: #873600;
+}
+
+.pawn-256 {
+  background-color: #6E2C00;
+}
+
+.pawn-512 {
+  background-color: #A93226;
+}
+
+.pawn-1024 {
+  background-color: #922B21;
+}
+
+.pawn-2048 {
+  background-color: #7B241C;
+}
+
+.pawn-4098 {
+  background-color: #641E16;
+}
+
+.pawn-8196 {
+  background-color: #512E5F;
+}
+
+.pawn-16384 {
+  background-color: #4A235A;
+}
+
+.pawn-32768 {
+  background-color: #154360;
+}
+

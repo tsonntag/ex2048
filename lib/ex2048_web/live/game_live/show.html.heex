@@ -1,12 +1,55 @@
-<h1>Game <%=@game.id %></h1>
-<p>
-  <.live_component id={@game.id} module={Ex2048Web.GameLive.Board} board={@game.board}/>
-</p>
+<h1>Game <%=@game.id %>
+</h1>
 
-<span><%= live_patch "<", to: Routes.game_show_path(@socket, :move, @game, "left") %></span>
-<span><%= live_patch ">", to: Routes.game_show_path(@socket, :move, @game, "right") %></span>
-<span><%= live_patch "^", to: Routes.game_show_path(@socket, :move, @game, "up") %></span>
-<span><%= live_patch "v", to: Routes.game_show_path(@socket, :move, @game, "down") %></span>
+<div class="container" phx-window-keyup="keyup">
+  <div class="row">
+    <.live_component id={@game.id} module={Ex2048Web.GameLive.Board} board={@game.board} />
+  </div>
 
-<p></p>
-<span><%= live_redirect "Back", to: Routes.game_index_path(@socket, :index) %></span>
+  <p></p>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-1">
+      <%= live_patch "^" , to: Routes.game_show_path(@socket, :move, @game, "up" ) %>
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <%= live_patch "<" , to: Routes.game_show_path(@socket, :move, @game, "left" ) %>
+    </div>
+    <div class="col-1"> </div>
+    <div class="col-1">
+      <%= live_patch ">" , to: Routes.game_show_path(@socket, :move, @game, "right" ) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-1">
+      <%= live_patch "v" , to: Routes.game_show_path(@socket, :move, @game, "down" ) %>
+    </div>
+    <div class="col-1"></div>
+  </div>
+
+  <p></p>
+
+  <div class="row">
+    <div class="col">
+      <span class={done_visible(@game)}>
+        Done!
+      </span>
+    </div>
+  </div>
+
+  <p></p>
+  <div class="row">
+    <div class="col-1">
+      <%= live_redirect "Back" , to: Routes.game_index_path(@socket, :index) %>
+    </div>
+    <div class="col-2">
+      <span>
+        <%= live_patch "New Game" , to: Routes.game_index_path(@socket, :create) %>
+      </span>
+    </div>
+  </div>
+</div>
