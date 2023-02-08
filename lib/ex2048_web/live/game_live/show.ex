@@ -33,6 +33,7 @@ defmodule Ex2048Web.GameLive.Show do
   def handle_event("keyup", %{"key" => "ArrowLeft"},  socket), do: apply_move("left",  socket)
   def handle_event("keyup", %{"key" => "ArrowRight"}, socket), do: apply_move("right", socket)
   def handle_event("keyup", %{"key" => "ArrowDown"},  socket), do: apply_move("down",  socket)
+  def handle_event("keyup", %{"key" => _},            socket), do: {:noreply, socket}
 
   defp apply_move(direction, socket) do
     id = socket.assigns.game.id
